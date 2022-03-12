@@ -33,6 +33,7 @@ public interface ContactDao extends CrudRepository<Contact, Long> {
     @Query("update Contact cont set cont.dateBirth = :dateBirth where cont.id =:id")
     public void updateDateBirth(
             @Param(value = "id") Long id,
-            @Param(value = "dateBirth") String dateBirth);
+            @Param(value = "dateBirth") String dateBirth
+    );
 }
 

@@ -2,6 +2,7 @@ package com.sofka.controller;
 
 import com.sofka.domain.Contact;
 import com.sofka.service.ContactService;
+import com.sofka.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Slf4j
 @RestController
@@ -24,6 +25,8 @@ public class ContactController {
 
     @Autowired
     private ContactService contactService;
+
+    private Response response = new Response();
 
     @GetMapping(path = "/")
     public Map<String, String> index() {
@@ -33,17 +36,37 @@ public class ContactController {
     }
 
     @GetMapping(path = "/contacts")
-    public List<Contact> list(){
-        var contacts = contactService.list();
-        return contacts;
+    public Response list(){
+        //var contacts = contactService.list();
+        //return contacts;
+        try {
+            response.data = contactService.list();
+        } catch (Exception exc) {
+            response.error = true;
+            response.message = exc.getMessage();
+            response.status = "ERROR";
+        }
+        return response;
     }
 
     @PostMapping(path = "/contact")
-    public ResponseEntity<Contact> create(Contact contact){
-        log.info("Contacto a crear: {}", contact);
-        contactService.save(contact);
-        return new ResponseEntity<>(contact, HttpStatus.CREATED);
-
+    public ResponseEntity<Response> create(Contact contact){
+        response.data = contact;
+        try {
+            log.info("Contacto a crear: {}", contact);
+            contactService.save(contact);
+            return new ResponseEntity<Response>(response, HttpStatus.CREATED);
+        } catch (Exception exc) {
+            response.status = exc.getCause().toString();
+            response.error = true;
+            if (Pattern.compile("(contact.cont_name_UNIQUE)").matcher(exc.getMessage()).find()) {
+                response.message = "Contacto duplicado";
+                return new ResponseEntity<Response>(response, HttpStatus.CONFLICT);
+            } else {
+                response.message = exc.getMessage();
+                return new ResponseEntity<Response>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 
     @DeleteMapping(path = "/contact/{id}")

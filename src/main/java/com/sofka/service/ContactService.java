@@ -18,7 +18,13 @@ public class ContactService implements IContactService {
     @Override
     @Transactional(readOnly = true)
     public List<Contact> list() {
-        return (List<Contact>) contactDao.findAll();
+        List<Contact> contacts = null;
+        try {
+            contacts = (List<Contact>) contactDao.findAll();
+        } catch (Exception exc) {
+            throw exc;
+        }
+        return contacts;
     }
 
     @Override
