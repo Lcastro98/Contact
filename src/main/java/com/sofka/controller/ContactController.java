@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,21 +47,45 @@ public class ContactController {
     }
 
     @DeleteMapping(path = "/contact/{id}")
-    public void delete(){ }
+    public ResponseEntity<Contact> delete(Contact contact){
+        log.info("Contacto a borrar: {}", contact);
+        contactService.delete(contact);
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
 
     @PutMapping(path = "/contact/{id}")
-    public void update(){ }
+    public ResponseEntity<Contact> update(Contact contact, @PathVariable("id") Long id){
+        log.info("Contacto a modificar {}", contact);
+        contactService.update(id, contact);
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
 
     @PatchMapping(path = "/contact/name/{id}")
-    public void updateName(){ }
+    public ResponseEntity<Contact> updateName(Contact contact, @PathVariable("id") Long id){
+        log.info("Contacto a modificar {}", contact);
+        contactService.updateName(id, contact);
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
 
     @PatchMapping(path = "/contact/phone/{id}")
-    public void updatePhone(){ }
+    public ResponseEntity<Contact> updatePhone(Contact contact, @PathVariable("id") Long id){
+        log.info("Contacto a modificar {}", contact);
+        contactService.updatePhone(id, contact);
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
 
     @PatchMapping(path = "/contact/email/{id}")
-    public void updateEmail(){ }
+    public ResponseEntity<Contact> updateEmail(Contact contact, @PathVariable("id") Long id){
+        log.info("Contacto a modificar {}", contact);
+        contactService.updateEmail(id, contact);
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
 
     @PatchMapping(path = "/contact/dateBirth/{id}")
-    public void updateDateBirth(){ }
+    public ResponseEntity<Contact> updateDateBirth(Contact contact, @PathVariable("id") Long id){
+        log.info("Contacto a modificar {}", contact);
+        contactService.updateDateBirth(id, contact);
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
 
 }
