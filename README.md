@@ -77,9 +77,9 @@ localhost:8080/contact/dateBirth/{id}
 
 ## Front-end
 
-Por favor, dirijare a la siguiente dirección para ver el front-end
-```plain
-https://github.com/Lcastro98/Contact-fe
-```
+Por favor, diríjase a la siguiente dirección para ver el front-end.
+
+[contact-fe](https://github.com/Lcastro98/Contact-fe)
+
 ---
 ⌨️ con ❤️ por [Lorena Castro](https://github.com/Lcastro98) ✌
