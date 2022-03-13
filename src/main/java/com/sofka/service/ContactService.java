@@ -9,6 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Se especifican las operaciones sobre la base de datos
+ *
+ * @version 1.00.00 2022-03-13 las transacciones corresponden a la versión 1 del sistema.
+ *
+ * @author Lorena Castro <lcastro0398@gmail.com>
+ */
+
 @Service
 public class ContactService implements IContactService {
 
@@ -18,10 +26,11 @@ public class ContactService implements IContactService {
     @Override
     @Transactional(readOnly = true)
     public List<Contact> list() {
-        List<Contact> contacts = null;
+        List<Contact> contacts;
         try {
             contacts = (List<Contact>) contactDao.findAll();
         } catch (Exception exc) {
+            exc.getLocalizedMessage();
             throw exc;
         }
         return contacts;

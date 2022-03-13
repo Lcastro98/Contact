@@ -10,6 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.io.Serializable;
 
+/**
+ * Se especifican los campos del modelo
+ *
+ * @version 1.00.00 2022-03-13 el modelo corresponde a la versión 1 del sistema.
+ *
+ * @author Lorena Castro <lcastro0398@gmail.com>
+ */
+
 @Data
 @Entity
 @Table(name="contact")
